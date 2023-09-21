@@ -1,0 +1,567 @@
+---
+title: "fmt2-r code for all"
+author: "Jinji Pang"
+date: "8/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(data.table)
+library(dplyr)
+library(RColorBrewer)
+library(colorspace)
+library(ggplot2)
+library(ggpubr)
+library(readr)
+library(kableExtra)
+
+```
+
+## fmt2-cfu
+
+
+
+```{r }
+
+fmt2cfu <- read.csv("../data/fmt2cfu.csv", header=T)
+fmt2cfu$DPM<-factor(fmt2cfu$DPM,levels = c("DPM-5","DPM-10","DPM-15"))
+```
+
+
+
+
+
+
+
+```{r}
+
+cfu1<-fmt2cfu%>%filter(DPM=="DPM-05")
+cfu2<-fmt2cfu%>%filter(DPM=="DPM-10")
+cfu3<-fmt2cfu%>%filter(DPM=="DPM-15")
+
+t.test(log10_CFU~Group,data=cfu1,var.equal=TRUE,conf.level=0.95)
+t.test(log10_CFU~Group,data=cfu2,var.equal=TRUE,conf.level=0.95)
+t.test(log10_CFU~Group,data=cfu3,var.equal=TRUE,conf.level=0.95)
+
+cfu4<-fmt2cfu%>%filter(Group=="treatment")
+cfu5<-fmt2cfu%>%filter(Group=="control")
+
+
+one.way <- aov(log10_CFU~DPM, data = cfu4)
+summary(one.way)
+
+one.way <- aov(log10_CFU~DPM, data = cfu5)
+summary(one.way)
+
+
+kruskal.test(log10_CFU~DPM, data = cfu4)
+
+
+kruskal.test(log10_CFU~DPM, data = cfu5)
+
+```
+
+## fmt2-cfu
+
+
+
+```{r , echo=FALSE}
+
+plot2<-ggplot(fmt2cfu, aes(x = DPM, y = log10_CFU, fill = Group)) +
+  geom_boxplot(outlier.size = 0) + 
+  geom_point(aes(shape=Group,colour=Group),position = position_jitterdodge(jitter.width = 0.1))+
+  labs(y=expression(Log[10]~CFU/g))+
+  scale_fill_manual(values =  c("#FF9999","#66B2FF"))+
+  stat_compare_means(aes(group=Group), label = "p.signif", label.y = 9)+
+  theme(axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        legend.position = "right", axis.title.y = element_text(face = "bold", size = 14),
+        axis.title.x = element_text(face = "bold", size = 14, colour = "black"),
+        legend.title = element_text(size = 14, colour = "black", face = "bold"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+
+plot2
+
+```
+
+
+
+## cfu parametric 
+
+```{r,echo=FALSE}
+fmt2cfu$Group <- recode(fmt2cfu$Group, treatment = 'FMT')
+fmt2cfu$Group <- recode(fmt2cfu$Group, control = 'Control')
+# Summary by group using dplyr
+fmt2cfu %>%                               
+  group_by(Group,DPM) %>% 
+  summarise(Min = min(log10_CFU,na.rm=T),
+            # q1 = quantile(log10_CFU, 0.25,na.rm=T),
+            Median = median(log10_CFU,na.rm=T),
+            Mean = mean(log10_CFU,na.rm=T),
+            # q3 = quantile(log10_CFU, 0.75,na.rm=T),
+            Max = max(log10_CFU,na.rm=T),
+            SD=sd(log10_CFU,na.rm=T))%>%
+  kbl(caption = "B", digits = 2) %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+
+
+```
+
+
+
+
+
+
+
+
+## Weight
+
+```{r, echo=FALSE}
+
+fmt2weight<-read.csv("../data/fmt2weight.csv", header=T)
+
+
+fmt2weight$Age<-factor(fmt2weight$Age,levels = c("DPM-0","DPM-5","DPM-10","DPM-15"))
+
+
+plotw<-ggplot(fmt2weight, aes(x = Age, y = Weight, fill = Group)) +
+  geom_boxplot(outlier.size = 0) + 
+  geom_point(aes(shape=Group,colour=Group),position = position_jitterdodge(jitter.width = 0.1))+
+  ylab("Weight/kg")+
+  scale_fill_manual(values =  c("#FFB266","#99CCFF"))+
+  stat_compare_means(aes(group=Group), label = "p.signif", label.y = 0.7)+
+  theme(axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        legend.position = "right", axis.title.y = element_text(face = "bold", size = 14),
+        axis.title.x = element_text(face = "bold", size = 14, colour = "black"),
+        legend.title = element_text(size = 14, colour = "black", face = "bold"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+  
+
+plotw
+
+
+
+```
+
+
+
+```{r}
+
+# Summary by group using dplyr
+fmt2weight %>%                               
+  group_by(Group,Age) %>% 
+  summarize(Min = min(Weight,na.rm=T),
+            Median = median(Weight,na.rm=T),
+            Mean = mean(Weight,na.rm=T),
+            Max = max(Weight,na.rm=T),
+            SD=sd(Weight,na.rm=T))%>%
+    kbl(caption = "FMT-seeder birds-weight", digits = 2) %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+ 
+
+```
+
+
+
+
+
+##  fmt2-alpha diversity
+
+
+
+
+
+```{r, echo=FALSE}
+
+fmt2alpha<- read.csv("../data/fmt2-alpha.csv",header = T)
+
+
+
+fmt2alpha$Group<-factor(fmt2alpha$Group, levels=c("Control","FMT"))
+
+
+
+observedotu=ggboxplot(fmt2alpha,x="DPM",y="observed_features",fill="Group",palette = c("#FFCCCC","#E0E0E0"),ylab = "observed features",xlab="Day Post Mingle")+
+  stat_compare_means(aes(group=Group), label = "p.signif")+
+   theme(axis.title.x = element_blank(),
+         axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        legend.position = "right", 
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.title = element_text(size = 14, colour = "black", face = "bold"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+observedotu
+
+
+pieloue=ggboxplot(fmt2alpha,x="DPM",y="pielou_evenness",fill="Group",palette = c("#FFCCCC","#E0E0E0"),
+                       ylab = "pielou-evenness",xlab="Day Post Mingle")+
+  stat_compare_means(aes(group=Group), label = "p.signif")+
+  theme(axis.title.x = element_blank(),
+         axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        legend.position = "right", 
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.title = element_text(size = 14, colour = "black", face = "bold"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+pieloue
+
+
+faithpd=ggboxplot(fmt2alpha,x="DPM",y="faith_pd",fill="Group",palette = c("#FFCCCC","#E0E0E0"),
+                  ylab = "faith-pd",xlab="Day Post Mingle")+
+  stat_compare_means(aes(group=Group), label = "p.signif")+
+  theme(axis.title.x = element_blank(),
+         axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        legend.position = "right", 
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.title = element_text(size = 14, colour = "black", face = "bold"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+faithpd
+
+shannon=ggboxplot(fmt2alpha,x="DPM",y="shannon_entropy",fill="Group",palette = c("#FFCCCC","#E0E0E0"),
+                  ylab = "shannon",xlab="Day Post Mingle")+
+  stat_compare_means(aes(group=Group), label = "p.signif")+
+  theme(axis.title.x = element_blank(),
+         axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        legend.position = "right", 
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.title = element_text(size = 14, colour = "black", face = "bold"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+shannon
+
+
+ggarrange(observedotu, shannon, pieloue, faithpd, 
+          labels = c("A", "B", "C","D"),
+          ncol = 2, nrow = 2)
+
+```
+
+### fmt2-alpha diversity trt vs control
+
+
+
+```{r,echo=FALSE}
+
+observedotu1=ggboxplot(fmt2alpha,x="Group",y="observed_features",width= 0.4,fill="Group",palette = c("#FFCCCC","#E0E0E0"),
+                       ylab = "observed features",xlab=" ")+
+  stat_compare_means(aes(group=Group), label = "p.signif",label.x = 1.5, label.y = 450)+
+  theme(axis.title.x = element_blank(),
+        axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.position = "none",
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+observedotu1
+##
+
+pieloue1=ggboxplot(fmt2alpha,x="Group",y="pielou_evenness",width= 0.4,fill="Group",palette = c("#FFCCCC","#E0E0E0"),
+                  ylab = "pielou-evenness",xlab=" ")+
+    stat_compare_means(aes(group=Group), label = "p.signif",label.x = 1.5,label.y = 0.82)+
+  theme(axis.title.x = element_blank(),
+        axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.position = "none",
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+  
+
+pieloue1
+
+##
+faithpd1=ggboxplot(fmt2alpha,x="Group",y="faith_pd",width= 0.4,fill="Group",palette = c("#FFCCCC","#E0E0E0"),
+                  ylab = "faith-pd",xlab=" ")+
+  stat_compare_means(aes(group=Group), label = "p.signif",label.x = 1.5,label.y = 23)+
+  theme(axis.title.x = element_blank(),
+        axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.position = "none",
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+faithpd1
+
+##
+
+shannon1=ggboxplot(fmt2alpha,x="Group",y="shannon_entropy",width= 0.4,fill="Group",palette = c("#FFCCCC","#E0E0E0"),
+                  ylab = "shannon",xlab=" ")+
+  stat_compare_means(aes(group=Group), label = "p.signif",label.x = 1.5,label.y = 7)+
+  theme(axis.title.x = element_blank(),
+        axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12),
+        legend.position = "none",
+        axis.title.y = element_text(face = "bold", size = 14),
+        legend.text = element_text(size = 12, face ="bold", colour ="black"),
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA, size = 1.2),
+        legend.key=element_blank())
+
+shannon1
+
+
+
+ggarrange(observedotu1, shannon1, pieloue1, faithpd1, 
+          labels = c("A", "B", "C","D"),
+          ncol = 2, nrow = 2)
+
+```
+
+
+
+
+
+## fmt2-relative abundance
+
+```{r, echo=FALSE}
+
+
+# Define the number of colors you want
+nb.cols <- 13
+mycolors <- colorRampPalette(brewer.pal(12, "Set3"))(nb.cols)
+
+## FMT2-phylum
+
+fmt2phylum<-read_csv("https://raw.githubusercontent.com/JinjiPang/fmt2/main/fmt2phylum.csv?token=AQV6SHFLHN5ND642CTEFVHDBD7OXC")
+
+fmt2phylum.long<-gather(fmt2phylum,Phylum,Count,Campilobacterota:Thermoplasmatota,factor_key=TRUE)%>%
+  arrange(Sample)
+
+df<-fmt2phylum.long%>%group_by(Sample)%>%
+  mutate(percentage=Count/sum(Count))
+
+
+levels(df$Phylum)
+
+df$Phylum <- factor(df$Phylum,
+                    levels = c("Thermoplasmatota","Actinobacteriota","Verrucomicrobiota","Desulfobacterota",
+           "Cyanobacteria", "Proteobacteria","Bacteroidota","Campilobacterota","Firmicutes"))
+
+
+plotfmt2phylum<-ggplot(df, aes(x = Sample, y = percentage, fill = Phylum)) + 
+  geom_bar(stat = "identity")+ylab("Relative Abundance")+
+  theme(axis.text.x = element_text(angle = 90))+
+  theme(axis.title.x = element_blank())+
+  scale_fill_manual(values =mycolors)
+
+
+plotfmt2phylum + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                      panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+
+###fmt2 class
+
+fmt2class<-read_csv("https://raw.githubusercontent.com/JinjiPang/fmt2/main/fmt2class.csv?token=AQV6SHC7GD2N2CIE46ZQJVTBD7PAU")
+
+fmt2class.long<-gather(fmt2class,Class,Count,Campylobacteria:Incertae_Sedis,factor_key=TRUE)%>%
+  arrange(Sample)
+
+
+df1<-fmt2class.long%>%group_by(Sample)%>%
+  mutate(percentage=Count/sum(Count))
+
+levels(df1$Class)
+df1$Class <- factor(df1$Class, levels = c( "Incertae_Sedis" ,"Thermoplasmata" ,"Coriobacteriia","Lentisphaeria","Negativicutes" ,"Alphaproteobacteria","Desulfovibrionia" , "Bacilli","Vampirivibrionia","Gammaproteobacteria",
+                                          "Bacteroidia","Campylobacteria" ,"Clostridia"))
+
+
+plotfmt2class<-ggplot(df1, aes(x = Sample, y = percentage, fill = Class)) + 
+  geom_bar(stat = "identity")+ylab("Relative Abundance")+
+  theme(axis.text.x = element_text(angle = 90))+
+  theme(axis.title.x = element_blank())+
+  scale_fill_manual(values =mycolors)
+
+
+plotfmt2class+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                    panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  theme(legend.key.height= unit(4, 'mm'),
+        legend.title = element_text(size=10), 
+        legend.text = element_text(size=8),
+        legend.key.width= unit(4, 'mm'))
+
+
+
+###fmt2 order
+
+fmt2order<-read_csv("https://raw.githubusercontent.com/JinjiPang/fmt2/main/fmt2order.csv?token=AQV6SHFZHXFJMS5ISHPRVB3BD7PDY")
+
+fmt2order.long<-gather(fmt2order,Order,Count,Campylobacterales:Izemoplasmatales,factor_key=TRUE)%>%
+  arrange(Sample)
+
+
+df2<-fmt2order.long%>%group_by(Sample)%>%
+  mutate(percentage=Count/sum(Count))
+
+levels(df2$Order)
+
+levels(df2$Order)[levels(df2$Order)%in%c("Bifidobacteriales","Bacteroidales","Eubacteriales",
+                                         "Clostridia","Peptococcales","Paenibacillales",
+                                         "Clostridiales","Christensenellales")] <- "Other"
+
+
+
+
+df2$Order <- factor(df2$Order, levels = c("Clostridia_UCG.014","Erysipelotrichales","Peptostreptococcales.Tissierellales","Monoglobales"
+                                          ,"Coriobacteriales", "Lactobacillales", "Campylobacterales","RF39",
+                                          "Oscillospirales","Enterobacterales",
+                                          "Clostridia_vadinBB60_group",
+                                          "Lachnospirales","Other"))
+
+
+
+
+
+plotfmt2order1<-ggplot(df2, aes(x = Sample, y = percentage, fill = Order)) + 
+  geom_bar(stat = "identity")+ylab("Relative Abundance")+
+  theme(axis.text.x = element_text(angle = 90))+
+  theme(axis.title.x = element_blank())+
+  scale_fill_manual(values =mycolors)+theme(legend.key.height= unit(4, 'mm'),
+                                            legend.title = element_text(size=10), 
+                                            legend.text = element_text(size=8),
+                                            legend.key.width= unit(4, 'mm'))
+
+
+plotfmt2order1+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+
+
+
+
+
+
+```
+
+
+
+
+
+```{r, echo=FALSE}
+
+
+fmt2weight <- read.csv("https://raw.githubusercontent.com/JinjiPang/fmt2/main/fmt2weight.csv?token=AQV6SHE3SVXZ36MVYV77QE3BS3BDQ")
+
+## barplot for weight
+
+fmt2weight%>%
+  ggplot(aes(x=Age,y=Weight,fill=Status))+geom_boxplot()+stat_boxplot(geom='errorbar')+
+  xlab("Day Post Mingle")+ylab("Body Weight")+scale_fill_manual(values=c("#CC6666", "#9999CC"))
+
+##
+
+str(fmt2weight)
+fmt2weight$Age <- as.factor(fmt2weight$Age)     
+
+
+weight1<-fmt2weight%>%filter(Age=="DPM-0")
+weight2<-fmt2weight%>%filter(Age=="DPM-05")
+weight3<-fmt2weight%>%filter(Age=="DPM-10")
+weight4<-fmt2weight%>%filter(Age=="DPM-15")
+
+t.test(Weight~Status,data=weight1,var.equal=TRUE,conf.level=0.95)
+t.test(Weight~Status,data=weight2,var.equal=TRUE,conf.level=0.95)
+t.test(Weight~Status,data=weight3,var.equal=TRUE,conf.level=0.95)
+t.test(Weight~Status,data=weight4,var.equal=TRUE,conf.level=0.95)
+
+
+
+
+```
+
+
+
+## FMT2 venn diagram
+
+```{r, echo=FALSE}
+
+
+library(VennDiagram)
+
+
+
+grid.newpage()
+
+# create pairwise Venn diagram
+draw.pairwise.venn(area1=20, area2=45,cross.area=10,
+                   category=c("Mango","Banana"),fill=c("Red","Yellow"))
+
+
+
+draw.pairwise.venn(area1=20, area2=45,cross.area=10,
+                   category=c("Mango","Banana"),fill=c("Red","Yellow"))
+
+
+
+##fmt2-venn diagram phylum
+
+draw.pairwise.venn(area1=9, area2=8,cross.area=8,
+                   category=c("FMT","Control"),fill=c("#FF99FF","#006666"))
+
+
+
+##fmt2-venn diagram class
+
+draw.pairwise.venn(area1=13, area2=10,cross.area=10,
+                   category=c("FMT","Control"),fill=c("#FF99FF","#006666"))
+
+
+
+##fmt2-venn diagram order
+
+draw.pairwise.venn(area1=28, area2=25,cross.area=24,
+                   category=c("FMT","Control"),fill=c("#FF99FF","#006666"))
+
+
+
+##fmt2-venn diagram family
+
+draw.pairwise.venn(area1=46, area2=41,cross.area=38,col="black",
+                   category=c("FMT","Control"),fill=c("#FF99FF","#006666"),lty="solid")
+
+
+##fmt2-venn diagram genus
+
+draw.pairwise.venn(area1=91, area2=96,cross.area=80,
+                   category=c("FMT","Control"),fill=c("#006666","#FF99FF"))
+
+
+##fmt2-venn diagram species
+
+draw.pairwise.venn(area1=125, area2=124,cross.area=106,
+                   category=c("FMT","Control"),fill=c("#FF99FF","#006666"))
+
+
+
+```
+
+
+
+
+
+

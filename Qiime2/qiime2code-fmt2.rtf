@@ -1,0 +1,1515 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;\f2\fswiss\fcharset0 Helvetica-Bold;
+\f3\fnil\fcharset0 HelveticaNeue;\f4\fmodern\fcharset0 Courier-Bold;\f5\fmodern\fcharset0 CourierNewPSMT;
+\f6\fnil\fcharset0 HelveticaNeue-Bold;\f7\fnil\fcharset0 HelveticaNeue-Medium;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red63\green105\blue30;
+\red38\green38\blue38;\red221\green32\blue103;\red0\green0\blue0;\red255\green255\blue255;\red0\green0\blue255;
+\red50\green91\blue142;\red242\green242\blue242;\red255\green255\blue255;\red85\green142\blue40;\red255\green0\blue255;
+\red0\green0\blue0;\red255\green255\blue0;\red85\green142\blue40;\red102\green177\blue50;\red63\green105\blue30;
+\red221\green32\blue103;\red43\green71\blue20;\red252\green39\blue18;\red0\green0\blue0;\red24\green24\blue23;
+\red255\green0\blue0;\red230\green243\blue125;}
+{\*\expandedcolortbl;;\csgray\c0;\csgray\c100000;\csgenericrgb\c24706\c41176\c11765;
+\cssrgb\c20000\c20000\c20000;\csgenericrgb\c86667\c12549\c40392;\csgray\c0\c0;\cssrgb\c100000\c100000\c100000;\csgenericrgb\c0\c0\c100000;
+\cssrgb\c25098\c43922\c62745;\cssrgb\c96078\c96078\c96078;\csgenericrgb\c100000\c100000\c100000;\csgenericrgb\c33333\c55686\c15686;\csgenericrgb\c100000\c0\c100000;
+\csgenericrgb\c0\c0\c0;\csgenericrgb\c100000\c100000\c0;\cssrgb\c39975\c61335\c20601;\cssrgb\c46532\c73327\c25364;\cssrgb\c30831\c47797\c15540;
+\cssrgb\c90234\c23206\c47866;\cssrgb\c21795\c34243\c10019;\cssrgb\c100000\c25271\c7591;\cssrgb\c0\c0\c0;\cssrgb\c12549\c12157\c11765;
+\csgenericrgb\c100000\c0\c0;\csgenericrgb\c90196\c95294\c49020;}
+\margl1440\margr1440\vieww15460\viewh15940\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs36 \cf0 ## Version used: Qiime2 2021.4
+\fs24 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf2 \cb3 \CocoaLigature0 $ source activate qiime2-2021.4
+\f0\fs24 \cf0 \cb1 \CocoaLigature1 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 /
+\f1\fs28 * first, save the sequences reads in a file, here is \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2/fmt2sequence */\cf5 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f2\b\fs36 \cf6 ## 1. Import 
+\f0\b0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf4 /* make a folder to save output for input reads results */\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 $ mkdir /users/pjj0702/fmt2/readin\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf4 /* input reads, with or without a space can cause error, especially in file path before \'97-*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 $ \cb7 qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' --input-path \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2/fmt2sequence/  \cf0 \kerning1\expnd0\expndtw0 --input-format CasavaOneEightSingleLanePerSampleDirFmt --output-path \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2/readin/demux.qza
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \cb1 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx4483\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 ## 2. Check the reads quality, which is essential for dada2/deblur analysis
+\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0\fs28 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf4 /*\cb8 \expnd0\expndtw0\kerning0
+it\'92s useful to generate a summary of the demultiplexing results. This allows you to determine how many sequences were obtained per sample, and also to get a summary of the distribution of sequence qualities at each position in your sequence data.\cb1 */
+\f3\fs24 \cf9 \cb8 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1 \cf5 \expnd0\expndtw0\kerning0
+$ qiime demux summarize 
+\f4\b \cf10 \\
+\f1\b0 \cf5 \
+  --i-data /Users/pjj0702/\cb11 fmt2/readin/demux.qza\\\cb1 \
+  --o-visualization /Users/pjj0702/\cb11 fmt2/readin/demux.qzv\cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf4 /* have a look at the result*/\
+/* min forward and reverse read is 31172, mean is 63049*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1 \cf5 \expnd0\expndtw0\kerning0
+$ qiime tools view /Users/pjj0702/fmt2/readin/demux.qzv
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \cb12 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f2\b\fs36 \cf6 \cb1 ## 3. Sequence quality control/denoising
+\f0\b0\fs28 \cf0 \cb12 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf4 \cb1 /* \expnd0\expndtw0\kerning0
+Next, we\'92ll look at the sequence quality based on ten-thousand randomly selected reads from the subsampled and filtered data, and then denoise the data. When you view the quality plots, note that in contrast to the corresponding plots in\cf13 \'a0{\field{\*\fldinst{HYPERLINK "https://docs.qiime2.org/2021.11/tutorials/moving-pictures/"}}{\fldrslt the moving pictures tutorial}},\cf4  there are now two interactive plots to be considered together. The plot on the left presents the quality scores for the forward reads, and the plot on the right presents the quality scores for the reverse reads. */\
+/* We\'92ll use these plots to determine what trimming parameters we want to use for denoising with DADA2, and then denoise the reads using\'a0dada2\'a0denoise-paired.\
+\pard\pardeftab720\sl320\sa200\partightenfactor0
+\cf4 In this example we have 250-base forward and reverse reads. Since we need the reads to be long enough to overlap when joining paired ends, the last \cf14 25\cf4  bases of the forward and reverse reads are being trimmed, but no trimming is being applied to the first of the sequences to avoid reducing the read length by too much. In this example, the same values are being provided for\'a0--p-trim-left-f\'a0and\'a0--p-trim-left-r\'a0and for\'a0--p-trunc-len-f\'a0and\'a0--p-trunc-len-r, but that is not a requirement.*/
+\f3 \cf5 \cb8 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0 \cb12 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf15 $ \cb7 qiime dada2 denoise-paired \\\
+  --i-demultiplexed-seqs \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2/readin/\kerning1\expnd0\expndtw0 demux.qza \\\
+  --p-trim-left-f 0 \\\
+  --p-trim-left-r 0 \\\
+  --p-trunc-len-f 225 \\\
+  --p-trunc-len-r 225 \\\
+  --o-table \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2\cf0 \kerning1\expnd0\expndtw0 /\cf5 \expnd0\expndtw0\kerning0
+readin/\cf15 \kerning1\expnd0\expndtw0 table.qza \\\
+  --o-representative-sequences \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2\cf0 \kerning1\expnd0\expndtw0 /\cf5 \expnd0\expndtw0\kerning0
+readin\cf0 \kerning1\expnd0\expndtw0 /rep-seqs.qza \\\cf15 \
+  --o-denoising-stats \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2\cf0 \kerning1\expnd0\expndtw0 /\cf5 \expnd0\expndtw0\kerning0
+readin\cf0 \kerning1\expnd0\expndtw0 /denoising-stats.qza 
+\f5 \cf15 \
+
+\f1 \cf13 \cb12 \
+\pard\pardeftab720\sl320\partightenfactor0
+\cf13 \cb8 \expnd0\expndtw0\kerning0
+/* At this stage, you will have artifacts containing the feature table, corresponding feature sequences, and DADA2 denoising stats. You can generate \cb16 summaries\cb8  of these as follows.*/
+\f0 \cf0 \cb12 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf4 /* metadata.tsv is the metadata file which can be in either .tsv or .txt but the content should be tab separated. */
+\f0 \cf0 \
+\
+
+\f1 $ qiime feature-table summarize \\\
+  --i-table \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \cb12 \kerning1\expnd0\expndtw0 table.qza \\\
+  --o-visualization \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \cb12 \kerning1\expnd0\expndtw0 table.qzv \\\
+  --m-sample-metadata-file 
+\fs24 \cb1 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/\cb11 fmt2
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 /
+\f1\fs28 \cf5 \cb11 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\cb1 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf15 $ qiime tools view \kerning1\expnd0\expndtw0 /\expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\kerning1\expnd0\expndtw0 /\expnd0\expndtw0\kerning0
+readin/\kerning1\expnd0\expndtw0 table.qzv \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f0 \cf0 \cb12 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf4 /* get the representative sequences*/\
+\
+\pard\pardeftab720\sl320\partightenfactor0
+\cf4 \cb1 \expnd0\expndtw0\kerning0
+/* The\'a0feature-table\'a0tabulate-seqs\'a0command will provide a mapping of feature IDs to sequences, and provide links to easily BLAST each sequence against the NCBI nt database.*/
+\f0 \cf0 \cb12 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf0 $ qiime feature-table tabulate-seqs \\\
+  --i-data \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \cb12 \kerning1\expnd0\expndtw0 rep-seqs.qza \\\
+  --o-visualization \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \cb12 \kerning1\expnd0\expndtw0 rep-seqs.qzv\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf5 \cb1 \expnd0\expndtw0\kerning0
+$ qiime tools view \cf0 \kerning1\expnd0\expndtw0 /\cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \kerning1\expnd0\expndtw0 /\cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 rep-seqs.qzv 
+\f0\fs24 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\fs28 \cf0 \cb12 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf13 /* stats (sample depth, quality, etc) of the results from Dada2 */
+\f0 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf0 $ qiime metadata tabulate \\\
+  --m-input-file \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\f1\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \cb12 \kerning1\expnd0\expndtw0 denoising-stats.qza \\\
+  --o-visualization \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2/readin/\cf0 \cb12 \kerning1\expnd0\expndtw0 denoising-stats.qzv\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf15 \cb1 \expnd0\expndtw0\kerning0
+$ qiime tools view \kerning1\expnd0\expndtw0 /\expnd0\expndtw0\kerning0
+Users/pjj0702/\cf5 fmt2\cf15 \kerning1\expnd0\expndtw0 /\expnd0\expndtw0\kerning0
+readin/\kerning1\expnd0\expndtw0 denoising-stats.qzv
+\f0\fs24 \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf17 \
+\pard\pardeftab720\sl380\partightenfactor0
+\cf0 \
+
+\f2\b\fs36 \cf6 ## 3-b. 
+\f6 \cb8 \expnd0\expndtw0\kerning0
+Filter out rare samples and features\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf0 \cb7 \kerning1\expnd0\expndtw0 $ mkdir 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf15 \cb8 filtered-sequences\
+\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf18 \cb7 \kerning1\expnd0\expndtw0 /* \expnd0\expndtw0\kerning0
+Total-frequency-based filtering is used to filter samples or features based on how frequently they are represented in the feature table.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf18 When filtering samples this can be used, for example, to filter samples whose total frequency is an outlier in the distribution of sample frequencies. In many 16S surveys, only a few (perhaps tens) of sequences will be obtained for some samples, possibly due to low biomass of the sample resulting in low DNA extraction yield. In this case, the user may want to remove samples based on their minimum total frequency (i.e., total number of sequences obtained for the sample, in this example). This can be achieved as follows (in this example, samples with a total frequency less than 5000 will be filtered).*/
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf19 /** First remove samples with lower sequencing depth*/\
+\cf20 /** Since this experiment the lowest frequency is 26379, so don\'92t have to do this*/\cf15 \cb8 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb7 \kerning1\expnd0\expndtw0 \
+\cf17 \cb1 \
+\pard\pardeftab720\sl380\partightenfactor0
+\cf21 /*Second, filter out rare ASVs, then filter out samples with low sequence reads*/\
+/*According to table.qzv, mean frequency is 53080, so we choose  as the value*/\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf18 /*Filter out rare ASVs, To calculate this cut-off (--p-min-frequency) you would identify the mean sample depth, \cf21 53080\cf18 , in the above visualization, multiply it by 0.001, and round to the nearest integer, which is 53*/\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f0\fs24 \cf0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf0 $ qiime feature-table filter-features \\\
+  --i-table \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 table.qza\\\
+  --p-min-frequency \cf22 53 \cf0 \\\
+  --o-filtered-table \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 \cb12 $ qiime feature-table summarize \\\
+  --i-table \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cb12 \
+  --o-visualization \cf5 \cb1 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.\cb12 qzv \\\
+  --m-sample-metadata-file 
+\fs24 \cb1 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs28 \cf0 \cb7 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f6\b\fs36 \cf6 \cb8 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f4\fs28 \cf6 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f0\b0 \cf0 \cb12 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f2\b\fs36 \cf6 \cb1 ## 4a. 
+\f6 \cb8 \expnd0\expndtw0\kerning0
+Generate a tree for phylogenetic diversity analyses\
+
+\f0\b0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs28 \cf13 \expnd0\expndtw0\kerning0
+/* QIIME supports several phylogenetic diversity metrics, including \cb16 Faith\'92s Phylogenetic Diversity and weighted and unweighted UniFrac\cb1 . In addition to counts of features per sample (i.e., the data in the\'a0FeatureTable[Frequency]\'a0QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a\'a0Phylogeny[Rooted]\'a0QIIME 2 artifact.\'a0*/
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 \
+$ qiime phylogeny align-to-tree-mafft-fasttree \\\
+  --i-sequences \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 rep-seqs.qza \\\
+  --o-alignment \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 aligned-rep-seqs.qza \\\
+  --o-masked-alignment \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 masked-aligned-rep-seqs.qza \\\
+  --o-tree \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 unrooted-tree.qza \\\
+  --o-rooted-tree \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 rooted-tree.qza
+\f0\fs24 \
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf13 /* Get diversity, sampling depth should be the sampling depth based on the minimum number of reads from denoising-stats.qzv. */\cf23 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 ## 4b. 
+\f6 \cb8 \expnd0\expndtw0\kerning0
+Alpha rarefaction plotting
+\fs28 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \cb7 \kerning1\expnd0\expndtw0 $ mkdir 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf15 \cb8 alpha-rarefaction 
+\f6\b \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f4 \cf4 \cb1 /* 
+\f1\b0 This visualizer computes one or more alpha diversity metrics at multiple sampling depths, in steps between 1 (optionally controlled with\'a0--p-min-depth) and the value provided as\'a0--p-max-depth.*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf4 \kerning1\expnd0\expndtw0 /* from the \cf19 feature-frequency-filtered-table.qza,\cf4  the minimum frequency is 25702*/
+\f3 \cf5 \cb8 \expnd0\expndtw0\kerning0
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f6\b \cf6 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf15 $ qiime diversity alpha-rarefaction \\\
+  --i-table 
+\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \cb8 \expnd0\expndtw0\kerning0
+\
+  --i-phylogeny 
+\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/readin/\cf15 \cb8 rooted-tree.qza \\\
+  --p-max-depth 40000 \\\
+  --m-metadata-file 
+\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \cb8 \
+  --o-visualization 
+\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cb7 /\cf15 \cb8 alpha-rarefaction\cf0 \cb1 \kerning1\expnd0\expndtw0 /\cf15 \cb8 \expnd0\expndtw0\kerning0
+alpha-rarefaction40000.qzv
+\f6\b \cf6 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\b0 \cf15 \cb1 $ qiime tools view 
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cb7 /\cf15 \cb8 alpha-rarefaction\cf0 \cb1 \kerning1\expnd0\expndtw0 /\cf15 \cb8 \expnd0\expndtw0\kerning0
+alpha-rarefaction40000.qzv
+\f6\b \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf6 \
+\
+\
+\
+\
+\pard\pardeftab720\sl320\partightenfactor0
+
+\f1\b0 \cf4 /* The visualization will have two plots. The top plot is an alpha rarefaction plot, and is primarily used to determine if the richness of the samples has been fully observed or sequenced. If the lines in the plot appear to \'93level out\'94 (i.e., approach a slope of zero) at some sampling depth along the x-axis, that suggests that collecting additional sequences beyond that sampling depth would not be likely to result in the observation of additional features. If the lines in a plot don\'92t level out, this may be because the richness of the samples hasn\'92t been fully observed yet (because too few sequences were collected), or it could be an indicator that a lot of sequencing error remains in the data (which is being mistaken for novel diversity).*/\
+\
+/* The bottom plot in this visualization is important when grouping samples by metadata. It illustrates the number of samples that remain in each group when the feature table is rarefied to each sampling depth. If a given sampling depth\'a0\cb11 d\cb8 \'a0is larger than the total frequency of a sample\'a0\cb11 s\cb8 \'a0(i.e., the number of sequences that were obtained for sample\'a0\cb11 s\cb8 ), it is not possible to compute the diversity metric for sample\'a0\cb11 s\cb8 \'a0at sampling depth\'a0\cb11 d\cb8 . If many of the samples in a group have lower total frequencies than\'a0\cb11 d\cb8 , the average diversity presented for that group at\'a0\cb11 d\cb8 \'a0in the top plot will be unreliable because it will have been computed on relatively few samples. When grouping samples by metadata, it is therefore essential to look at the bottom plot to ensure that the data presented in the top plot is reliable. */
+\f4\b \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\
+\
+\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f4\b\fs28 \cf19 /* From the \cb8 \expnd0\expndtw0\kerning0
+alpha-rarefaction40000.qzv\cb1 \kerning1\expnd0\expndtw0 , 20000 is a good value for diversity metrics*/
+\f1\b0 \cf4 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 $ qiime diversity core-metrics-phylogenetic \\\
+  --i-phylogeny \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+readin/\cf0 \kerning1\expnd0\expndtw0 rooted-tree.qza \\\
+  --i-table \cf5 \expnd0\expndtw0\kerning0
+/Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\
+  --p-sampling-depth 20000 \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --output-dir 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf15 \cb3 \CocoaLigature0 $ qiime tools view /Users/pjj0702/fmt2/core-metrics-results/unweighted_unifrac_emperor.qzv\cf0 \cb1 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 ## 5. Alpha Diversity
+\fs28 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \
+\
+$ qiime diversity alpha-group-significance \\\
+  --i-alpha-diversity 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/evenness_vector.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/evenness-group-significance.qzv\
+\
+\
+$ qiime diversity alpha-group-significance \\\
+  --i-alpha-diversity 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/shannon_vector.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/shannon-group-significance.qzv
+\f0\fs24 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs28 \cf15 \expnd0\expndtw0\kerning0
+$ qiime diversity alpha-group-significance 
+\f4\b \\
+\f1\b0 \
+  --i-alpha-diversity \kerning1\expnd0\expndtw0 /\CocoaLigature0 Users/pjj0702/fmt2\CocoaLigature1 /core-metrics-results/\CocoaLigature0 observed_features_vector\expnd0\expndtw0\kerning0
+\CocoaLigature1 .qza 
+\f4\b \\
+\f1\b0 \
+  --m-metadata-file 
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \
+  --o-visualization \kerning1\expnd0\expndtw0 /\CocoaLigature0 Users/pjj0702/fmt2\CocoaLigature1 /core-metrics-results/\CocoaLigature0 observed-features\cf0 \CocoaLigature1 -group-significance\cf15 \expnd0\expndtw0\kerning0
+.qz\kerning1\expnd0\expndtw0 v
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 \
+\
+$ qiime diversity alpha-group-significance \\\
+  --i-alpha-diversity 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/faith_pd_vector.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/faith-pd-group-significance.qzv\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf15 \expnd0\expndtw0\kerning0
+$ qiime tools view \kerning1\expnd0\expndtw0 /\expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\kerning1\expnd0\expndtw0 /\cf0 core-metrics-results\cf15 \expnd0\expndtw0\kerning0
+/\cf0 \kerning1\expnd0\expndtw0 faith-pd-group-significance.qzv\cf15 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 ## 6. Beta Diversity
+\f0\b0\fs24 \cf0 \
+\pard\pardeftab720\sl380\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf4 /* beta diversity p-values by treatment status or/and sampling times*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+\cf13 /*unweighted*/
+\f0\fs24 \cf0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf0 $ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/unweighted_unifrac_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/unweighted-unifrac-group-significance.qzv \\\
+  --p-pairwise\
+\
+$ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/unweighted_unifrac_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Treatment_Isolation \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/unweighted-unifrac-time-group-significance.qzv \\\
+  --p-pairwise
+\f0\fs24 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf15 \expnd0\expndtw0\kerning0
+$ qiime tools view 
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/unweighted-unifrac-group-significance.qzv 
+\f0\fs24 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf13 /*weighted*/
+\f0\fs24 \cf0 \
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf0 $ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/weighted_unifrac_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/weighted-unifrac-group-significance.qzv \\\
+  --p-pairwise\
+\
+$ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/weighted_unifrac_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Treatment_Isolation \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/weighted-unifrac-time-group-significance.qzv \\\
+  --p-pairwise
+\f0\fs24 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf4 /* bray-curtis*/\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf0 $ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/bray_curtis_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/bray-curtis-group-significance.qzv \\\
+  --p-pairwise\
+\
+$ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/bray_curtis_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Treatment_Isolation \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/bray-curtis-time-group-significance.qzv \\\
+  --p-pairwise\cf4 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+\cf4 \
+/* jaccard*/\
+\
+\pard\pardeftab720\sl380\partightenfactor0
+\cf0 $ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/jaccard_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/jaccard-group-significance.qzv \\\
+  --p-pairwise\
+\
+$ qiime diversity beta-group-significance \\\
+  --i-distance-matrix 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/jaccard_distance_matrix.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Treatment_Isolation \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 core-metrics-results/jaccard-time-group-significance.qzv \\\
+  --p-pairwise\cf4 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+\cf4 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf4 /* \cb8 \expnd0\expndtw0\kerning0
+use the\'a0{\field{\*\fldinst{HYPERLINK "http://emperor.microbio.me/"}}{\fldrslt Emperor}}\'a0tool to explore principal coordinates (PCoA) plots in the context of sample metadata */\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f7\fs60 \cf5 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl312\slmult1\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 ## 7. 
+\f6 \cb8 \expnd0\expndtw0\kerning0
+Taxonomic analysis
+\f7\b0\fs60 \cf5 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1\fs28 \cf13 \expnd0\expndtw0\kerning0
+/* 515F: GTGYCAGCMGCCGCGGTAA\
+   806R: GGACTACNVGGGTWTCTAAT */
+\f3\fs30 \cf24 \cb8 \
+
+\f1\fs28 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+$ mkdir 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 taxonomy\
+\
+$ qiime feature-classifier classify-sklearn \\\
+  --i-classifier 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 silva-138-99-515-806-nb-classifier.qza \\\
+  --i-reads 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/readin/\cf0 \kerning1\expnd0\expndtw0 rep-seqs.qza \\\
+  --o-classification 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza\
+\
+$ qiime metadata tabulate \\\
+  --m-input-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qzv
+\f0\fs24 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf4 /* barplot for each sample */\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf0 $ qiime taxa barplot \\\
+  --i-table 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\
+  --i-taxonomy 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\
+  --m-metadata-file 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf0 \kerning1\expnd0\expndtw0 \
+  --o-visualization 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxa-bar-plots.qzv
+\f0\fs24 \
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f1\fs28 \cf15 \expnd0\expndtw0\kerning0
+$ qiime tools view 
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxa-bar-plots.qzv\
+\
+\
+\cf15 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\sl380\partightenfactor0
+
+\f0\fs36 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b \cf6 ## 9. 
+\f6 \cb8 \expnd0\expndtw0\kerning0
+Differential abundance testing with ANCOM\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f7\b0\fs60 \cf5 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f4\b\fs28 \cf4 \cb1 \kerning1\expnd0\expndtw0 /*
+\f1\b0 \expnd0\expndtw0\kerning0
+ANCOM can be applied to identify features that are differentially abundant (i.e. present in different abundances) across sample groups.\'a0*/
+\f2\b\fs36 \cf6 \kerning1\expnd0\expndtw0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf0 $ mkdir 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf15 $ qiime composition add-pseudocount \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \
+  --o-composition-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table.qza
+\f2\b\fs36 \cf6 \
+
+\f1\b0\fs28 \cf15 \
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 ancom-group.qzv\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf15 $ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column \cf0 Treatment_Isolation\cf15  \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 ancom-trtiso.qzv
+\f2\b\fs36 \cf6 \
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf4 /* \expnd0\expndtw0\kerning0
+We\'92re also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our\'a0FeatureTable[Frequency]\'a0at the taxonomic level of interest, and then re-run the above steps.*/
+\f2\b\fs36 \cf6 \kerning1\expnd0\expndtw0 \
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0\fs28 \cf13 /*genus*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf15 $ qiime taxa collapse \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \
+  --i-taxonomy 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\cf15 \
+  --p-level 6 \\\
+  --o-collapsed-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l6.qza\
+\
+$ qiime composition add-pseudocount \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l6.qza \\\
+  --o-composition-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l6.qza\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l6.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l6-ancom-group.qzv\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l6.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column \cf0 Treatment_Isolation\cf15  \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l6-ancom-trtiso.qzv\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf13 /*family*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf15 $ qiime taxa collapse \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \
+  --i-taxonomy 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\cf15 \
+  --p-level 5 \\\
+  --o-collapsed-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l5.qza\
+\
+$ qiime composition add-pseudocount \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l5.qza \\\
+  --o-composition-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l5.qza\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l5.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l5-ancom-group.qzv\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l5.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column \cf0 Treatment_Isolation\cf15  \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l5-ancom-trtiso.qzv\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf13 /*order*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf15 $ qiime taxa collapse \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \
+  --i-taxonomy 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\cf15 \
+  --p-level 4 \\\
+  --o-collapsed-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l4.qza\
+\
+$ qiime composition add-pseudocount \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l4.qza \\\
+  --o-composition-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l4.qza\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l4.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l4-ancom-group.qzv\
+\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l4.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column \cf0 Treatment_Isolation\cf15 \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l4-ancom-trtiso.qzv\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf13 /*class*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf15 $ qiime taxa collapse \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \
+  --i-taxonomy 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\cf15 \
+  --p-level 3 \\\
+  --o-collapsed-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l3.qza\
+\
+$ qiime composition add-pseudocount \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l3.qza \\\
+  --o-composition-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l3.qza\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l3.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l3-ancom-group.qzv\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf15 $ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l3.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column \cf0 Treatment_Isolation\cf15  \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l3-ancom-trtiso.qzv
+\f2\b\fs36 \cf6 \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b0\fs28 \cf13 /*phylum*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b0\fs28 \cf15 $ qiime taxa collapse \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \
+  --i-taxonomy 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\cf15 \
+  --p-level 2 \\\
+  --o-collapsed-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l2.qza\
+\
+$ qiime composition add-pseudocount \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l2.qza \\\
+  --o-composition-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l2.qza\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l2.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column Group \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l2-ancom-group.qzv\
+\
+\
+\
+$ qiime composition ancom \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 comp-table-l2.qza \\\
+  --m-metadata-file 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2
+\fs24 \cf0 \kerning1\expnd0\expndtw0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+fmt2metadata.tsv\\\cf15 \kerning1\expnd0\expndtw0 \
+  --m-metadata-column \cf0 Treatment_Isolation\cf15  \\\
+  --o-visualization 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 l2-ancom-trtiso.qzv\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b\fs36 \cf6 ## 10. 
+\f6 \cb8 \expnd0\expndtw0\kerning0
+Out put relative abundance 
+\f1\b0\fs28 \cf15 \cb1 \kerning1\expnd0\expndtw0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf13 /*genus*/\
+\
+/* this part is from previous ancom part*/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf25 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf15 \cb26 $ qiime taxa collapse \\\
+  --i-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cb1 filtered-sequences/\cf0 \kerning1\expnd0\expndtw0 feature-frequency-filtered-table.qza\\\cf15 \cb26 \
+  --i-taxonomy 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/taxonomy/\cf0 \kerning1\expnd0\expndtw0 taxonomy.qza \\\cf15 \
+  --p-level 6 \\\
+  --o-collapsed-table 
+\fs24 \cf0 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l6.qza\cf0  \cb1 \
+\
+$ qiime feature-table relative-frequency \\\
+  --i-table 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l6.qza\\\cf0 \
+  --o-relative-frequency-table /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-genus-table.qza\
+\
+$ qiime tools export \\\
+  --input-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-genus-table.qza \\\
+  --output-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/\
+\
+$ biom convert -i /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/feature-table.biom -o /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-genus-table.tsv --to-tsv
+\f0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf15 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf13 /*family*/
+\f1 \cf0 \
+\
+$ qiime feature-table relative-frequency \\\
+  --i-table 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l5.qza\\\cf0 \
+  --o-relative-frequency-table /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-family-table.qza\
+\
+$ qiime tools export \\\
+  --input-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-family-table.qza \\\
+  --output-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/\
+\
+$ biom convert -i /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/feature-table.biom -o /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-family-table.tsv --to-tsv
+\f0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf15 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf13 /*order*/
+\f1 \cf0 \
+\
+$ qiime feature-table relative-frequency \\\
+  --i-table 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l4.qza\\\cf0 \
+  --o-relative-frequency-table /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-order-table.qza\
+\
+$ qiime tools export \\\
+  --input-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-order-table.qza \\\
+  --output-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/\
+\
+$ biom convert -i /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/feature-table.biom -o /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-order-table.tsv --to-tsv
+\f0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf15 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf13 /*class*/
+\f1 \cf0 \
+\
+$ qiime feature-table relative-frequency \\\
+  --i-table 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l3.qza\\\cf0 \
+  --o-relative-frequency-table /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-class-table.qza\
+\
+$ qiime tools export \\\
+  --input-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-class-table.qza \\\
+  --output-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/\
+\
+$ biom convert -i /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/feature-table.biom -o /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-class-table.tsv --to-tsv
+\f0 \
+\
+\
+\
+\cf13 /*phylum*/
+\f1 \cf0 \
+\
+$ qiime feature-table relative-frequency \\\
+  --i-table 
+\fs24 /
+\fs28 \cf5 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2/\cf0 \kerning1\expnd0\expndtw0 ancom/\cf15 table-l2.qza\\\cf0 \
+  --o-relative-frequency-table /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-phylum-table.qza\
+\
+$ qiime tools export \\\
+  --input-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-phylum-table.qza \\\
+  --output-path /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/\
+\
+$ biom convert -i /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/feature-table.biom -o /\cf5 \cb11 \expnd0\expndtw0\kerning0
+Users/pjj0702/fmt2\cf0 \cb1 \kerning1\expnd0\expndtw0 /taxonomy/rel-phylum-table.tsv --to-tsv
+\f0 \
+\
+\
+\
+\
+\
+\
+\
+}

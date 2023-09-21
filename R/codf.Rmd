@@ -1,0 +1,78 @@
+---
+title: "correlation"
+author: "Kimki"
+date: '2022-05-04'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library("Hmisc")
+library(tidyverse)
+library(knitr)
+library(GGally)
+```
+
+## Genus correlation
+
+
+```{r }
+
+codf1<-read.csv('../data/fmt2-ra-genus3.csv',header=TRUE)
+codf1<-codf1[,5:23]
+
+```
+
+
+## Add functions
+
+```{r}
+
+cors <- function(df)
+  {
+  M <- Hmisc::rcorr(as.matrix(df)) 
+  Mdf <- map(M, ~data.frame(.x)) 
+  return(Mdf)
+  }
+
+
+formatted_cors <- function(df)
+  {
+  cors(df) %>%
+    map(~rownames_to_column(.x, var="measure1")) %>%
+    map(~pivot_longer(.x, -measure1, "measure2")) %>% 
+    bind_rows(.id = "id") %>%
+    pivot_wider(names_from = id, values_from = value) %>%
+    mutate(sig_p = ifelse(P < .05, T, F),
+           p_if_sig = ifelse(P <.05, P, NA), 
+           r_if_sig = ifelse(P <.05, r, NA))
+  }
+
+
+
+```
+
+## Draw the Plot-top18
+
+```{r ,echo=FALSE}
+
+formatted_cors(codf1) %>% 
+  ggplot(aes(measure1, measure2, fill=r, label=round(r_if_sig,2))) +
+  geom_tile() + 
+  labs(x = NULL, y = NULL, fill = "Pearson's\nCorrelation", title="Correlations at genus level", 
+       subtitle="Only significant Pearson's correlation coefficients shown") + 
+  scale_fill_gradient2(mid="#FBFEF9",low="#0C6291",high="#A63446", limits=c(-1,1)) +
+  geom_text() +
+  theme_classic() +
+  theme(axis.text.x = element_text(size=12, angle = 45, hjust=1),
+        axis.text.y = element_text(color = "grey20", size = 12, angle = 0, hjust = 1, vjust = 0, face = "plain"),
+        plot.title = element_text(size=22))+
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) +
+  theme(text=element_text(family="Roboto"))
+
+
+
+```
+

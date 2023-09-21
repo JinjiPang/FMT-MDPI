@@ -1,0 +1,496 @@
+---
+title: "fmt2-ra"
+author: "Kimki"
+date: '2022-05-31'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(data.table)
+library(dplyr)
+library(RColorBrewer)
+library(colorspace)
+library(ggplot2)
+library(ggpubr)
+library(readr)
+library(plotly)
+library(writexl)
+library(ggtext)
+
+
+```
+
+## fmt2-Relative abundance
+
+### at phylum level
+
+
+```{r, echo=FALSE}
+
+
+## phylum level 
+
+fmt2phylum<-read.csv('../data/fmt2-ra-phylum.csv',header=TRUE)
+
+str(fmt2phylum)
+```
+
+
+
+
+
+```{r, echo=FALSE}
+
+
+fmt2phylum.long<-gather(fmt2phylum,Phylum,RA,Campylobacterota:Thermoplasmatota,factor_key=TRUE)%>%
+  arrange(SampleID)
+
+fmt2phylum.long %>%group_by(SampleID, Phylum)%>%
+  summarise(
+          count = n(),
+          mean_RA = mean(RA, na.rm = TRUE)
+          )
+
+
+fmt2phylum.long %>%group_by(Group, Phylum)%>%
+  summarise(
+          count = n(),
+          mean_RA = mean(RA, na.rm = TRUE)
+          )
+
+```
+
+
+
+```{r}
+## save the numerical data
+ana1<-fmt2phylum.long %>%group_by(SampleID, Phylum)%>%
+  summarise(
+          count = n(),
+          mean_RA = mean(RA, na.rm = TRUE)
+          )
+
+
+
+write_xlsx(ana1, "../data/fmt2raphylum1.xlsx")
+
+
+
+ana2<-fmt2phylum.long %>%group_by(Group, Phylum)%>%
+  summarise(
+    count = n(),
+    mean_RA = mean(RA, na.rm = TRUE)
+  )
+
+
+write_xlsx(ana2, "../data/fmt2raphylum2.xlsx")
+
+ana3<-fmt2phylum.long %>%group_by(Group, Phylum, DPM)%>%
+  summarise(
+    count = n(),
+    mean_RA = mean(RA, na.rm = TRUE)
+  )
+
+
+write_xlsx(ana3, "../data/fmt2raphylum3.xlsx")
+
+
+
+
+ana4<-fmt2phylum.long %>%group_by(Treatment_Isolation, Phylum)%>%
+  summarise(
+    count = n(),
+    mean_RA = mean(RA, na.rm = TRUE)
+  )
+
+
+write_xlsx(ana4, "../data/fmt2raphylum4.xlsx")
+
+
+
+```
+
+
+
+
+
+
+```{r}
+##modified on Sep2, 2023
+df<-fmt2phylum.long%>%group_by(Group.DPM, Phylum)%>%
+  mutate(mean_RA = mean(RA, na.rm = TRUE))
+
+
+levels(df$Phylum)
+
+df$Phylum <- factor(df$Phylum, levels = c("Thermoplasmatota","Actinobacteriota","Verrucomicrobiota","Desulfobacterota" ,
+  "Proteobacteria","Cyanobacteria", "Campylobacterota","Bacteroidota","Firmicutes"))
+
+
+dfnew<-df[, c(2,3,4,5,7)]
+
+
+dfnew<-distinct(dfnew, Group.DPM, .keep_all = TRUE)
+
+dfnew$Group.DPM<-factor(dfnew$Group.DPM,levels = c("C-DPM-0","C-DPM-5","C-DPM-10","C-DPM-15",
+                                                   "T-DPM-0","T-DPM-5","T-DPM-10","T-DPM-15"))
+
+# dfnew$Treatment_Isolation<-gsub('C_','C-', dfnew$Treatment_Isolation)
+# dfnew$Treatment_Isolation<-gsub('T_','T-', dfnew$Treatment_Isolation)
+```
+
+
+```{r}
+nb.cols <- 13
+mycolors <- colorRampPalette(brewer.pal(12, "Set3"))(nb.cols)
+
+
+```
+
+
+
+
+```{r}
+fmt2phylum<-ggplot(dfnew, aes(x = Group.DPM, y = mean_RA, fill = Phylum)) + 
+  geom_bar(stat = "identity",width = 0.7)+
+   scale_fill_brewer(palette = "Paired",
+                    name="Phylum",
+                    labels = c(
+                      expression(italic("Thermoplasmatota")),
+                      expression(italic("Actinobacteriota")),
+                      expression(italic("Verrucomicrobiota" )),
+                      expression(italic("Desulfobacterota")),
+                      expression(italic("Cyanobacteria")),
+                      expression(italic("Proteobacteria")),
+                      expression(italic("Campylobacterota")),
+                      expression(italic("Bacteroidota")),
+                      expression(italic("Firmicutes"))))+
+   ylab("Relative abundance")+theme_bw()+
+  xlab("Group-DPM")+theme(legend.text.align = 0)
+
+
+p2<-fmt2phylum
+
+p2
+
+```
+
+
+```{r}
+##fmt2 RA phylum Group
+
+fmt2phylum2<-ggplot(dfnew, aes(x = Group, y = mean_RA/4, fill = Phylum)) + 
+  geom_bar(stat = "identity",width = 0.5)+ylab("Relative Abundance")+
+  scale_fill_manual(values =mycolors, labels = c(expression(italic("Thermoplasmatota")),
+               expression(italic("Actinobacteriota")),
+               expression(italic("Verrucomicrobiota")),
+               expression(italic("Desulfobacterota")),
+               expression(italic("Proteobacteria")),
+               expression(italic("Cyanobacteria")),
+               expression(italic("Campylobacterota")),
+               expression(italic("Bacteroidota")),
+               expression(italic("Firmicutes"))))+
+  theme(axis.title.x = element_blank(),legend.text.align = 0)
+
+
+fmt2phylum2 + labs(title="Relative Abundance at Phylum Level")+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+               panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+
+```
+
+
+
+```{r}
+## fmt2 RA phylum group donut
+
+p<-ggplot(dfnew, aes(x = Group, y = mean_RA/4, fill = Phylum)) +
+  geom_col() +
+  scale_x_discrete(limits = c( " ", "Control","Treatment")) +
+  # labs(title="Relative Abundance at Phylum Level",y="Relative Abundance",x="Group")+
+   scale_fill_manual(values =mycolors, labels = c(expression(italic("Thermoplasmatota")),
+               expression(italic("Actinobacteriota")),
+               expression(italic("Verrucomicrobiota")),
+               expression(italic("Desulfobacterota")),
+               expression(italic("Proteobacteria")),
+               expression(italic("Cyanobacteria")),
+               expression(italic("Campylobacterota")),
+               expression(italic("Bacteroidota")),
+               expression(italic("Firmicutes"))))+
+  theme(axis.title.x = element_blank(),legend.text.align = 0)+
+  coord_polar("y")+theme_minimal()
+
+p+labs(title="Relative Abundance at Phylum Level",y="Relative Abundance", x="Croup")+theme(legend.text.align = 0)
+
+
+
+```
+
+
+
+
+## Draw the phylum-level heatmap. 
+
+```{r}
+
+
+p<-dfnew%>%
+  ggplot(aes(Treatment_Isolation, Phylum, fill= mean_RA)) +
+  geom_tile()+
+  labs(title = "Phylum Level Relative Abundance Heatmap", x="Treatment-Isolation", y="Phylum")+
+  scale_fill_gradient2( low = "#CCE5FF",
+                        mid = "#66CC00",
+                        high = "#FF66FF",
+                        midpoint = 0.45)+
+  theme(axis.text.x = element_text(angle = 45))+labs(fill='RA') 
+ 
+
+p+ theme_bw()
+
+
+```
+
+
+
+
+
+
+
+
+
+## Genus level
+
+```{r}
+## genus level 
+
+fmt2genus<-read.csv('../data/fmt2-ra-genus.csv',header=TRUE)
+
+
+```
+
+
+
+
+```{r}
+fmt2genus.long<-gather(fmt2genus,Genus,RA,Helicobacter:Hungateiclostridiaceae.f.,factor_key=TRUE)%>%
+  arrange(SampleID)
+
+
+
+fmt2genus.long %>%group_by(Treatment_Isolation, Genus)%>%
+  summarise(
+          count = n(),
+          mean_RA = mean(RA, na.rm = TRUE)
+          )
+
+
+fmt2genus.long %>%group_by(Group, Genus)%>%
+  summarise(
+          count = n(),
+          mean_RA = mean(RA, na.rm = TRUE)
+          )
+
+
+
+```
+
+```{r}
+
+## save the numerical data
+ana1<-fmt2genus.long %>%group_by(Treatment_Isolation, Genus)%>%
+  summarise(
+          count = n(),
+          mean_RA = mean(RA, na.rm = TRUE)
+          )
+
+
+write_xlsx(ana1, "../data/fmt2ragenus1.xlsx")
+
+
+
+ana2<-fmt2genus.long %>%group_by(Group, Genus)%>%
+  summarise(
+          count = n(),
+          mean_RA = mean(RA, na.rm = TRUE)
+          )
+
+
+write_xlsx(ana2, "../data/fmt2ragenus2.xlsx")
+
+
+```
+
+
+
+```{r}
+## genus level 
+
+fmt2genusnew<-read.csv('../data/fmt2-ra-genus1.csv',header=TRUE)
+
+fmt2genusnew.long<-gather(fmt2genusnew,Genus,RA,Helicobacter:Other,factor_key=TRUE)%>%
+  arrange(SampleID)
+```
+
+
+
+```{r}
+
+levels(fmt2genusnew.long$Genus)
+
+fmt2genusnew.long$Genus<-as.factor(fmt2genusnew.long$Genus)
+
+df<-fmt2genusnew.long%>%group_by(Treatment_Isolation, Genus)%>%
+  mutate(mean_RA = mean(RA, na.rm = TRUE))
+
+
+dfnew<-df[, c(1,2,3,5,7)]
+
+dfnew<-distinct(dfnew, Treatment_Isolation, .keep_all = TRUE)
+dfnew$Treatment_Isolation<-gsub('C_','C-', dfnew$Treatment_Isolation)
+dfnew$Treatment_Isolation<-gsub('T_','T-', dfnew$Treatment_Isolation)
+
+```
+
+```{r}
+
+fmt2genus<-ggplot(dfnew, aes(x = Treatment_Isolation, y =mean_RA, fill = Genus)) + 
+  geom_bar(stat = "identity",width = 0.7)+ylab("Relative Abundance")+
+  scale_fill_manual(values =c("#FFCCCC","#CC99FF",
+                              "#4C9900","#3399FF","#FF3333","#A0A0A0","#CC6600",
+                              "#E5FFCC","#FFFF00","#CCE5FF",	"#B0C4DE", "#E6E6FA","#F08080","#FFF0F5","#D3D3D3","#EE82EE","#3CB371","#FFD700","#FFFFCC"),
+      labels = c(expression(italic("Helicobacter")),
+               expression(italic("Bacteroides")),
+               expression(italic("Ruminococcus_torques_group")),
+               expression(italic("UCG-005")),
+               expression(italic("Escherichia-Shigella")),
+               expression(italic("Gastranaerophilales")),
+               expression(italic("Lactobacillus")),
+               expression(italic("Clostridia_vadinBB60_group")),
+               expression(italic("Faecalibacterium")),
+               expression(italic("Parasutterella")),
+               expression(italic("Parabacteroides")),
+               expression(italic("Oscillospiraceae(f)")),
+               expression(italic("Alistipes")),
+               expression(italic("Bacillus")),
+               expression(italic("Colidextribacter")),
+               expression(italic("GCA-900066575")),
+               expression(italic("Romboutsia")),
+               expression(italic("Streptococcus")),
+               "Other"))+
+    theme(legend.key.height= unit(4, 'mm'),legend.title = element_text(size=10), 
+         legend.text = element_text(size=8),legend.key.width= unit(4, 'mm'),legend.text.align = 0)+
+  theme(axis.title.x = element_blank())
+
+fmt2genus + labs(title="Relative Abundance at Genus Level")+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+               panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+```
+
+```{r}
+##farm RA genus Group
+
+fmt2genus1<-ggplot(dfnew, aes(x = Group, y =mean_RA/4, fill = Genus)) + 
+  geom_bar(stat = "identity",width = 0.7)+ylab("Relative Abundance")+
+  scale_fill_manual(values =c("#FFCCCC","#CC99FF",
+                              "#4C9900","#3399FF","#FF3333","#A0A0A0","#CC6600",
+                              "#E5FFCC","#FFFF00","#CCE5FF",	"#B0C4DE", "#E6E6FA","#F08080","#FFF0F5", "#D3D3D3","#EE82EE","#3CB371","#FFD700","#FFFFCC"),
+              labels = c(expression(italic("Helicobacter")),
+               expression(italic("Bacteroides")),
+               expression(italic("Ruminococcus_torques_group")),
+               expression(italic("UCG-005")),
+               expression(italic("Escherichia-Shigella")),
+               expression(italic("Gastranaerophilales")),
+               expression(italic("Lactobacillus")),
+               expression(italic("Clostridia_vadinBB60_group")),
+               expression(italic("Faecalibacterium")),
+               expression(italic("Parasutterella")),
+               expression(italic("Parabacteroides")),
+               expression(italic("Oscillospiraceae(f)")),
+               expression(italic("Alistipes")),
+               expression(italic("Bacillus")),
+               expression(italic("Colidextribacter")),
+               expression(italic("GCA-900066575")),
+               expression(italic("Romboutsia")),
+               expression(italic("Streptococcus")),
+               "Other"))+
+  theme(legend.key.height= unit(4, 'mm'),legend.title = element_text(size=10), 
+                                            legend.text = element_text(size=8),
+                                            legend.key.width= unit(4, 'mm'),legend.text.align = 0)+
+  theme(axis.title.x = element_blank())
+
+fmt2genus1 + labs(title="Relative Abundance at Genus Level")+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+               panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+
+```
+
+
+
+
+
+```{r}
+## farm RA genus campy donut
+p<-ggplot(dfnew, aes(x = Group, y = mean_RA/4, fill = Genus)) +
+  geom_col() +
+  scale_x_discrete(limits = c(" ",  "Control","Treatment")) +
+  # labs(title="Relative Abundance at Phylum Level",y="Relative Abundance",x="Group")+
+  scale_fill_manual(values =c("#FFCCCC","#CC99FF",
+                              "#4C9900","#3399FF","#FF3333","#A0A0A0","#CC6600",
+                              "#E5FFCC","#FFFF00","#CCE5FF",	"#B0C4DE", "#E6E6FA","#F08080","#FFF0F5",
+                              "#D3D3D3","#EE82EE","#3CB371","#FFD700","#FFFFCC"),
+               labels = c(expression(italic("Helicobacter")),
+               expression(italic("Bacteroides")),
+               expression(italic("Ruminococcus_torques_group")),
+               expression(italic("UCG-005")),
+               expression(italic("Escherichia-Shigella")),
+               expression(italic("Gastranaerophilales")),
+               expression(italic("Lactobacillus")),
+               expression(italic("Clostridia_vadinBB60_group")),
+               expression(italic("Faecalibacterium")),
+               expression(italic("Parasutterella")),
+               expression(italic("Parabacteroides")),
+               expression(italic("Oscillospiraceae(f)")),
+               expression(italic("Alistipes")),
+               expression(italic("Bacillus")),
+               expression(italic("Colidextribacter")),
+               expression(italic("GCA-900066575")),
+               expression(italic("Romboutsia")),
+               expression(italic("Streptococcus")),
+               "Other"))+theme_minimal()+
+    theme(legend.key.height= unit(4, 'mm'),legend.title = element_text(size=10), 
+                                            legend.text = element_text(size=8),
+                                            legend.key.width= unit(4, 'mm'))+
+  coord_polar("y")
+
+p+labs(title="Relative Abundance at Genus Level",y="Relative Abundance",x="Group")+theme(legend.text.align = 0)
+ 
+
+
+
+```
+
+## Draw the phylum-level heatmap.
+
+```{r}
+
+
+p<-dfnew%>%
+  ggplot(aes(Treatment_Isolation, Genus, fill= mean_RA)) +
+  geom_tile()+
+  labs(title = "Phylum Level Relative Abundance Heatmap", x=" ", y="Genus")+
+  scale_fill_gradient2( low = "#CCE5FF",
+                        mid = "#66CC00",
+                        high = "#FF66FF",
+                        midpoint = 0.3)+
+  theme(axis.text.x = element_text(angle = 45))+labs(fill='RA') 
+ 
+
+p+ theme_bw()
+
+
+```
+
+
+
